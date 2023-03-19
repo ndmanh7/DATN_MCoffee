@@ -5,4 +5,7 @@
     <string name="login_welcome_title">Chào mừng bạn đến với \n MCoffee</string>
     <string name="login_with_email">Đăng nhập bằng Email</string>
     <string name="register_now">Chưa có tài khoản? Đăng ký ngay</string>
+
+    //register strings
+    <string name="register_title">Đăng ký tài khoản</string>
 </resources>

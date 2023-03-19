@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "541526441280",
+    "firebase_url": "https://datn-mcoffee-default-rtdb.firebaseio.com",
+    "project_id": "datn-mcoffee",
+    "storage_bucket": "datn-mcoffee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541526441280:android:f6fcf5ff848f989b5b0ea5",
+        "android_client_info": {
+          "package_name": "com.example.mcoffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "541526441280-a3rgisp2372uae830gr7o9rpc1hldpmn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv0aBwbebe6eSbVaWXwjmCG6aXbkiGNsI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "541526441280-a3rgisp2372uae830gr7o9rpc1hldpmn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
