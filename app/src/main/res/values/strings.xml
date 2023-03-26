@@ -8,4 +8,10 @@
 
     //register strings
     <string name="register_title">Đăng ký tài khoản</string>
+
+
+    //menu titles
+    <string name="menu_home">Trang chủ</string>
+    <string name="menu_cart">Giỏ hàng</string>
+    <string name="menu_profile">Tôi</string>
 </resources>

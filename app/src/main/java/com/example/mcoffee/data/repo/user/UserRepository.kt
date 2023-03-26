@@ -1,6 +1,8 @@
-package com.example.mcoffee.data.remote
+package com.example.mcoffee.data.repo.user
 
-interface UserFirebaseDataSource {
+import com.example.mcoffee.data.remote.user.AuthRequestState
+
+interface UserRepository {
     suspend fun login(email: String, password: String): AuthRequestState
     suspend fun register(email: String, password: String): AuthRequestState
 }

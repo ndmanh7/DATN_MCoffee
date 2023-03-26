@@ -1,4 +1,4 @@
-package com.example.mcoffee.data.remote
+package com.example.mcoffee.data.remote.user
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException

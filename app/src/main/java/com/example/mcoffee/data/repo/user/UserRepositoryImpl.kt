@@ -1,11 +1,8 @@
-package com.example.mcoffee.data.repo
+package com.example.mcoffee.data.repo.user
 
 import android.util.Patterns
-import com.example.mcoffee.data.remote.AuthRequestState
-import com.example.mcoffee.data.remote.UserFirebaseDataSource
-import com.google.firebase.auth.FirebaseAuth
-import java.util.regex.Pattern
-import javax.xml.validation.Validator
+import com.example.mcoffee.data.remote.user.AuthRequestState
+import com.example.mcoffee.data.remote.user.UserFirebaseDataSource
 
 class UserRepositoryImpl(
     private val userFirebaseDataSource: UserFirebaseDataSource

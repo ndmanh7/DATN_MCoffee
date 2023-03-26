@@ -1,11 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#05000000">
 
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#05000000">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:padding="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <ImageView
+                    android:id="@+id/img_user"
+                    android:background="@drawable/round_img_background"
+                    android:src="@drawable/person"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:tint="@color/black" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginTop="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chào mừng người dùng"
+                    android:layout_below="@id/img_user"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="sans-serif-medium"/>
+            </RelativeLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_margin="10dp"
+            android:id="@+id/recycler_view_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="home fragment"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingHorizontal="16dp"
+        android:background="#05000000"
+        >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/recycler_view_product"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"/>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

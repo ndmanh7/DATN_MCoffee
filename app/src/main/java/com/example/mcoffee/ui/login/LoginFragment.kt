@@ -1,19 +1,17 @@
 package com.example.mcoffee.ui.login
 
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mcoffee.R
-import com.example.mcoffee.data.remote.AuthRequestState
+import com.example.mcoffee.data.remote.user.AuthRequestState
 import com.example.mcoffee.databinding.FragmentLoginBinding
 import com.example.mcoffee.ui.base.BaseFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -35,6 +33,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     override fun bindView() {
         super.bindView()
+
         auth = Firebase.auth
         binding.apply {
             btnLogin.setOnClickListener {
@@ -54,7 +53,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         when (authRequestState) {
             is AuthRequestState.Success -> {
                 Toast.makeText(requireContext(),authRequestState.msg, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_loginFragment_to_main_nav_graph)
+                findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
             }
 
             is AuthRequestState.Fail -> {
