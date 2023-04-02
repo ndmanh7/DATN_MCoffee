@@ -3,11 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/homeFragment"
+    >
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.mcoffee.ui.main.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment"
+        >
+        <action
+            android:id="@+id/action_homeFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_detailActivity"
+            app:destination="@id/detailActivity" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.mcoffee.ui.main.ProfileFragment"
@@ -15,5 +24,14 @@
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.example.mcoffee.ui.main.CartFragment"
-        android:label="CartFragment" />
+        android:label="CartFragment" >
+        <action
+            android:id="@+id/action_cartFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/detailActivity"
+        android:name="com.example.mcoffee.ui.DetailActivity"
+        android:label="activity_detail"
+        tools:layout="@layout/activity_detail" />
 </navigation>

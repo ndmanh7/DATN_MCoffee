@@ -21,4 +21,9 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:fitsSystemWindows">true</item>
     </style>
+    
+    <style name="ShapeAppearanceOverlay.MCoffee.roundCorner" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
 </resources>

@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/arrow_left"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_order_title"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thanh toán"
+        android:textSize="18dp"
+        android:fontFamily="@font/sora_semibold"
+        android:textColor="@color/black"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title_delivery_address"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Địa chỉ nhận hàng"
+        android:fontFamily="@font/sora_semibold"
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_receiver_info"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_delivery_address"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chưa có tên người nhận"
+        android:fontFamily="@font/sora_semibold"
+        android:textSize="14dp"
+        android:textColor="@color/black"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_receiver_address"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_receiver_info"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chưa có địa chỉ người nhận"
+        android:fontFamily="@font/sora_light"
+        android:textSize="12dp" />
+
+    <LinearLayout
+        android:id="@+id/btn_edit_address"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_receiver_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_corner_outline"
+        android:paddingVertical="6dp"
+        android:paddingHorizontal="12dp">
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/edit"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="4dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chỉnh sửa địa chỉ"
+            android:textSize="12dp"
+            android:fontFamily="@font/sora_light"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/separate_line"
+        app:layout_constraintTop_toBottomOf="@id/btn_edit_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:src="@drawable/separate_line"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_product_info"
+        app:layout_constraintTop_toBottomOf="@id/separate_line"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_product_image"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:src="@drawable/login_background"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MCoffee.roundCorner"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_product_name"
+            android:layout_toEndOf="@id/img_product_image"
+            android:layout_marginStart="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product name"
+            android:fontFamily="@font/sora_semibold"
+            android:textSize="16sp"
+            android:textColor="@color/black"/>
+
+        <ImageView
+            android:id="@+id/btn_add"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/circle_outline"
+            android:src="@drawable/add"
+            android:padding="6dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_amount"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="14dp"
+            android:layout_toStartOf="@id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:fontFamily="@font/sora_semibold"
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
+
+        <ImageView
+            android:id="@+id/btn_minus"
+            android:layout_marginEnd="14dp"
+
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/tv_amount"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/circle_outline"
+            android:src="@drawable/baseline_remove_24"
+            android:padding="6dp"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/separate_line2"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/rl_product_info"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:src="@drawable/separate_line"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title_payment_detail"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintTop_toBottomOf="@id/separate_line2"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chi tiết thanh toán"
+        android:fontFamily="@font/sora_semibold"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+    <RelativeLayout
+        android:id="@+id/row_price"
+        app:layout_constraintTop_toBottomOf="@id/title_payment_detail"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giá"
+            android:fontFamily="@font/sora_light"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="35000"
+            android:fontFamily="@font/sora_semibold"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/row_amount"
+        app:layout_constraintTop_toBottomOf="@id/row_price"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số lượng"
+            android:fontFamily="@font/sora_light"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_product_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="1"
+            android:fontFamily="@font/sora_semibold"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/separate_line3"
+        app:layout_constraintTop_toBottomOf="@id/row_amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:src="@drawable/separate_line"/>
+
+    <RelativeLayout
+        android:id="@+id/row_total_price"
+        app:layout_constraintTop_toBottomOf="@id/separate_line3"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng"
+            android:fontFamily="@font/sora_light"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="35000"
+            android:fontFamily="@font/sora_semibold"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="16dp"
+        android:background="@drawable/round_corner_login_layout">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_total_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng thanh toán: 35000"
+            android:fontFamily="@font/sora_light"
+            android:textColor="@color/black"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_order"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/tv_total_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_button"
+            android:text="Đặt hàng"
+            android:textColor="@color/white"
+            android:fontFamily="@font/sora_semibold"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

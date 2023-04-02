@@ -19,26 +19,35 @@ class ProductFirebaseDataSourceImpl(
 
     override suspend fun getProductsByCategory(category: Category): Flow<ArrayList<Product>> {
         val productList = arrayListOf<Product>()
-        val categoryRef = databaseReference.child("Category")
+//        val categoryRef = databaseReference.child("Category")
+        val productRef = databaseReference.child("Product")
 
         return callbackFlow {
             val valueEventListener = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     productList.clear()
-                    for (cat in snapshot.children) {
-                        val cate = cat.getValue(Category::class.java)
-                        cate?.let {
-                            if (it == category) {
-                                for (prod in cat.child("product").children) {
-                                    val product = prod.getValue(Product::class.java)
-                                    product?.let { product1 ->
-                                        productList.add(product1)
-                                    }
-                                }
+//                    for (cat in snapshot.children) {
+//                        val cate = cat.getValue(Category::class.java)
+//                        cate?.let {
+//                            if (it == category) {
+//                                for (prod in cat.child("product").children) {
+//                                    val product = prod.getValue(Product::class.java)
+//                                    product?.let { product1 ->
+//                                        productList.add(product1)
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+
+                    for (prod in snapshot.children) {
+                        val product = prod.getValue(Product::class.java)
+                        product?.let {
+                            if (it.categoryUid == category.uid) {
+                                productList.add(it)
                             }
                         }
                     }
-                    Log.d("manh", "productList at line 36: $productList")
                     trySend(productList)
                 }
 
@@ -46,8 +55,8 @@ class ProductFirebaseDataSourceImpl(
                     TODO("Not yet implemented")
                 }
             }
-            categoryRef.addValueEventListener(valueEventListener)
-            awaitClose{categoryRef.removeEventListener(valueEventListener)}
+            productRef.addValueEventListener(valueEventListener)
+            awaitClose{productRef.removeEventListener(valueEventListener)}
         }
     }
 

@@ -1,9 +1,12 @@
 package com.example.mcoffee.di
 
+import com.example.mcoffee.data.remote.cart.CartFirebaseDataSource
 import com.example.mcoffee.data.remote.user.UserFirebaseDataSource
 import com.example.mcoffee.data.remote.category.CategoryFirebaseDataSource
 import com.example.mcoffee.data.remote.product.ProductFirebaseDataSource
 import com.example.mcoffee.data.repo.*
+import com.example.mcoffee.data.repo.cart.CartRepository
+import com.example.mcoffee.data.repo.cart.CartRepositoryImpl
 import com.example.mcoffee.data.repo.category.CategoryRepository
 import com.example.mcoffee.data.repo.category.CategoryRepositoryImpl
 import com.example.mcoffee.data.repo.product.ProductRepository
@@ -36,5 +39,11 @@ object RepositoryModule {
     @Singleton
     fun provideProductRepository(productFirebaseDataSource: ProductFirebaseDataSource): ProductRepository {
         return ProductRepositoryImpl(productFirebaseDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCartRepository(cartFirebaseDataSource: CartFirebaseDataSource): CartRepository {
+        return CartRepositoryImpl(cartFirebaseDataSource)
     }
 }

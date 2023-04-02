@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mcoffee.data.model.category.Category
 import com.example.mcoffee.databinding.ItemCategoryListBinding
-import com.example.mcoffee.ui.interfaces.IOnItemClickListener
+import com.example.mcoffee.ui.interfaces.IOnCategoryItemClickListener
 
 class CategoryAdapter(
     val categoryList: ArrayList<Category>
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryListHolder>(){
 
-    private lateinit var itemClickListener: IOnItemClickListener
+    private lateinit var itemClickListener: IOnCategoryItemClickListener
 
     inner class CategoryListHolder(val binding: ItemCategoryListBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
@@ -21,7 +21,7 @@ class CategoryAdapter(
         }
 
         override fun onClick(view: View?) {
-            itemClickListener.onItemClick(view!!, bindingAdapterPosition)
+            itemClickListener.onCategoryItemClick(view!!, bindingAdapterPosition)
         }
     }
 
@@ -39,7 +39,7 @@ class CategoryAdapter(
         }
     }
 
-    fun setClickListener(clickListener: IOnItemClickListener) {
+    fun setClickListener(clickListener: IOnCategoryItemClickListener) {
         this.itemClickListener = clickListener
     }
 

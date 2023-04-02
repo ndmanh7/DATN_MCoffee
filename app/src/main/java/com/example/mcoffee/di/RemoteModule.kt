@@ -1,5 +1,7 @@
 package com.example.mcoffee.di
 
+import com.example.mcoffee.data.remote.cart.CartFirebaseDataSource
+import com.example.mcoffee.data.remote.cart.CartFirebaseDataSourceImpl
 import com.example.mcoffee.data.remote.user.UserFirebaseDataSource
 import com.example.mcoffee.data.remote.user.UserFirebaseDataSourceImpl
 import com.example.mcoffee.data.remote.category.CategoryFirebaseDataSource
@@ -34,6 +36,12 @@ object RemoteModule {
     @Singleton
     fun provideProductFirebaseDataSource(databaseReference: DatabaseReference) : ProductFirebaseDataSource {
         return ProductFirebaseDataSourceImpl(databaseReference)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCartFirebaseDataSource(auth: FirebaseAuth, databaseReference: DatabaseReference) : CartFirebaseDataSource {
+        return CartFirebaseDataSourceImpl(auth, databaseReference)
     }
 
 }
