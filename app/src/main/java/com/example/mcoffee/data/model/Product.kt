@@ -5,6 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class Product(
+    var uid: String = "",
     var categoryUid: String = "",
     var productName: String = "",
     var description: String = "",

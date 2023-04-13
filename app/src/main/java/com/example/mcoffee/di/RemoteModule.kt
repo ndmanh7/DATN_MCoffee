@@ -6,6 +6,8 @@ import com.example.mcoffee.data.remote.user.UserFirebaseDataSource
 import com.example.mcoffee.data.remote.user.UserFirebaseDataSourceImpl
 import com.example.mcoffee.data.remote.category.CategoryFirebaseDataSource
 import com.example.mcoffee.data.remote.category.CategoryFirebaseDataSourceImpl
+import com.example.mcoffee.data.remote.order.OrderFirebaseDataSource
+import com.example.mcoffee.data.remote.order.OrderFirebaseDataSourceImpl
 import com.example.mcoffee.data.remote.product.ProductFirebaseDataSource
 import com.example.mcoffee.data.remote.product.ProductFirebaseDataSourceImpl
 import com.google.firebase.auth.FirebaseAuth
@@ -42,6 +44,12 @@ object RemoteModule {
     @Singleton
     fun provideCartFirebaseDataSource(auth: FirebaseAuth, databaseReference: DatabaseReference) : CartFirebaseDataSource {
         return CartFirebaseDataSourceImpl(auth, databaseReference)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOrderFirebaseDataSource(auth: FirebaseAuth, databaseReference: DatabaseReference) : OrderFirebaseDataSource {
+        return OrderFirebaseDataSourceImpl(auth, databaseReference)
     }
 
 }

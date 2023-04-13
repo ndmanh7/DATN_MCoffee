@@ -3,16 +3,19 @@ package com.example.mcoffee.di
 import com.example.mcoffee.data.remote.cart.CartFirebaseDataSource
 import com.example.mcoffee.data.remote.user.UserFirebaseDataSource
 import com.example.mcoffee.data.remote.category.CategoryFirebaseDataSource
+import com.example.mcoffee.data.remote.order.OrderFirebaseDataSource
 import com.example.mcoffee.data.remote.product.ProductFirebaseDataSource
 import com.example.mcoffee.data.repo.*
-import com.example.mcoffee.data.repo.cart.CartRepository
-import com.example.mcoffee.data.repo.cart.CartRepositoryImpl
-import com.example.mcoffee.data.repo.category.CategoryRepository
-import com.example.mcoffee.data.repo.category.CategoryRepositoryImpl
-import com.example.mcoffee.data.repo.product.ProductRepository
-import com.example.mcoffee.data.repo.product.ProductRepositoryImpl
-import com.example.mcoffee.data.repo.user.UserRepository
-import com.example.mcoffee.data.repo.user.UserRepositoryImpl
+import com.example.mcoffee.domain.repo.CartRepository
+import com.example.mcoffee.data.repo.CartRepositoryImpl
+import com.example.mcoffee.domain.repo.CategoryRepository
+import com.example.mcoffee.data.repo.CategoryRepositoryImpl
+import com.example.mcoffee.domain.repo.OrderRepository
+import com.example.mcoffee.data.repo.OrderRepositoryImpl
+import com.example.mcoffee.domain.repo.ProductRepository
+import com.example.mcoffee.data.repo.ProductRepositoryImpl
+import com.example.mcoffee.domain.repo.UserRepository
+import com.example.mcoffee.data.repo.UserRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,5 +48,11 @@ object RepositoryModule {
     @Singleton
     fun provideCartRepository(cartFirebaseDataSource: CartFirebaseDataSource): CartRepository {
         return CartRepositoryImpl(cartFirebaseDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOrderRepository(orderFirebaseDataSource: OrderFirebaseDataSource): OrderRepository {
+        return OrderRepositoryImpl(orderFirebaseDataSource)
     }
 }
