@@ -1,7 +1,7 @@
 package com.example.mcoffee.ui.fragment
 
 import android.widget.Toast
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mcoffee.R
@@ -10,9 +10,8 @@ import com.example.mcoffee.databinding.FragmentLoginBinding
 import com.example.mcoffee.safeNavigate
 import com.example.mcoffee.ui.base.BaseFragment
 import com.example.mcoffee.ui.viewmodel.LoginViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.example.mcoffee.ui.viewmodel.UserInformationViewModel
+import com.example.mcoffee.utils.LoginConfig
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -20,8 +19,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
 
-    private lateinit var auth: FirebaseAuth
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by activityViewModels()
 
     override fun observeViewModel() {
         super.observeViewModel()
@@ -36,7 +34,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     override fun bindView() {
         super.bindView()
 
-        auth = Firebase.auth
+        if (LoginConfig.isLogin(requireContext(), "logged_in")) {
+            findNavController().safeNavigate(LoginFragmentDirections.actionLoginFragmentToMainActivity())
+        }
+
         binding.apply {
             btnLogin.setOnClickListener {
                 viewModel.login(
@@ -54,6 +55,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     private fun handleAuthRequestState(authRequestState: AuthRequestState) {
         when (authRequestState) {
             is AuthRequestState.Success -> {
+                LoginConfig.loginState(requireContext(), "logged_in")
                 Toast.makeText(requireContext(),authRequestState.msg, Toast.LENGTH_SHORT).show()
                 findNavController().safeNavigate(LoginFragmentDirections.actionLoginFragmentToMainActivity())
             }

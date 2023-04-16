@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mcoffee.data.model.Cart
 import com.example.mcoffee.data.model.Product
+import com.example.mcoffee.data.model.Record
 import com.example.mcoffee.data.remote.FireBaseState
 import com.example.mcoffee.domain.repo.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,9 +33,9 @@ class ProductDetailViewModel @Inject constructor(
         _orderAmount.value = _orderAmount.value!! - 1
     }
 
-    fun addToCart(product: Product) {
+    fun addToCart(record: Record) {
         viewModelScope.launch {
-            _addToCartState.value = cartRepository.addToCart(product)
+            _addToCartState.value = cartRepository.addToCart(record)
         }
     }
 

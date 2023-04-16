@@ -155,7 +155,7 @@
             android:textColor="@color/primary_color"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_add_to_cart"
+            android:id="@+id/btn_order"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_width="217dp"

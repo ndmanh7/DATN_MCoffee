@@ -6,10 +6,9 @@ import com.google.firebase.database.IgnoreExtraProperties
 data class Order(
     var uid: String = "",
     var userUid: String = "",
-    var productName: String = "",
+    var records: List<Record> = emptyList(),
     var orderDate: String = "",
-    var orderAmount: Int = 0,
-    var price: Int = 0,
-    var totalPrice: Int = 0
+    var totalPrice: Int = 0,
+    var status: Boolean = false
 ) {
 }

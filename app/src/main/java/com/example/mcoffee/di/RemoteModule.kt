@@ -24,8 +24,8 @@ object RemoteModule {
 
     @Provides
     @Singleton
-    fun provideUserFirebaseDataSource(auth: FirebaseAuth): UserFirebaseDataSource {
-        return UserFirebaseDataSourceImpl(auth)
+    fun provideUserFirebaseDataSource(auth: FirebaseAuth, databaseReference: DatabaseReference): UserFirebaseDataSource {
+        return UserFirebaseDataSourceImpl(auth, databaseReference)
     }
 
     @Provides

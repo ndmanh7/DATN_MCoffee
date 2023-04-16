@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.mcoffee.R
+import com.example.mcoffee.data.model.Order
 import com.example.mcoffee.data.model.Product
+import com.example.mcoffee.data.model.Record
 import com.example.mcoffee.data.remote.FireBaseState
 import com.example.mcoffee.databinding.FragmentProductDetailBinding
 import com.example.mcoffee.ui.base.BaseFragment
@@ -47,26 +49,14 @@ class ProductDetailFragment: BaseFragment<FragmentProductDetailBinding>(Fragment
         showProductInfoFromHomeFragment()
 
         binding.apply {
-//            btnAdd.setOnClickListener {
-//                productDetailViewModel.increaseOrderAmount()
-//            }
-//
-//            btnRemove.setOnClickListener {
-//                productDetailViewModel.decreaseOrderAmount()
-//            }
-//
-            btnAddToCart.setOnClickListener {
-//                val cartInfo = Cart()
-//                cartInfo.apply {
-//                    productName = tvDetailProductName.text.toString()
-//                    orderDate = SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().time)
-////                    orderAmount = tvAmount.text.toString().toInt()
-//                    price = tvProductPrice.text.toString().toInt()
-//                    totalPrice = tvProductPrice.text.toString().toInt()
-//                }
-//                productDetailViewModel.addToCart(cartInfo)
+            btnOrder.setOnClickListener {
                 val productInfo : Product = requireActivity().intent.getSerializableExtra("productInfo") as Product
-                findNavController().navigate(R.id.action_productDetailFragment_to_orderFragment, bundleOf("productInfo" to productInfo))
+                val record = Record(
+                    product = productInfo,
+                    amount = 1,
+                    totalPrice = productInfo.price
+                )
+                findNavController().navigate(R.id.action_productDetailFragment_to_orderFragment, bundleOf("record_from_detail_screen" to record))
             }
 
             imgAddToCart.setOnClickListener {
@@ -81,12 +71,15 @@ class ProductDetailFragment: BaseFragment<FragmentProductDetailBinding>(Fragment
 
     private fun addToCart() {
         val productInfo : Product = requireActivity().intent.getSerializableExtra("productInfo") as Product
-        productDetailViewModel.addToCart(productInfo)
+        val record = Record(
+            product = productInfo,
+            amount = 1
+        )
+        productDetailViewModel.addToCart(record)
         Toast.makeText(requireContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show()
     }
 
     private fun showProductInfoFromHomeFragment() {
-//        val productInfo : Product = arguments?.getSerializable("productInfo") as Product
         val productInfo : Product = requireActivity().intent.getSerializableExtra("productInfo") as Product
 
         binding.apply {

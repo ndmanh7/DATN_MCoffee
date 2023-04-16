@@ -16,22 +16,37 @@
         <action
             android:id="@+id/action_homeFragment_to_detailActivity"
             app:destination="@id/detailActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.mcoffee.ui.fragment.ProfileFragment"
-        android:label="ProfileFragment" />
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.example.mcoffee.ui.fragment.CartFragment"
         android:label="CartFragment" >
         <action
-            android:id="@+id/action_cartFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            android:id="@+id/action_cartFragment_to_orderFragment2"
+            app:destination="@id/orderFragment2" />
     </fragment>
     <activity
         android:id="@+id/detailActivity"
         android:name="com.example.mcoffee.ui.activity.DetailActivity"
         android:label="activity_detail"
         tools:layout="@layout/activity_detail" />
+    <fragment
+        android:id="@+id/orderFragment2"
+        android:name="com.example.mcoffee.ui.fragment.OrderFragment"
+        android:label="OrderFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.mcoffee.ui.fragment.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.mcoffee.ui.fragment.EditProfileFragment"
+        android:label="EditProfileFragment" />
 </navigation>

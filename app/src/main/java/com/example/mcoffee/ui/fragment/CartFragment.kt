@@ -2,9 +2,13 @@ package com.example.mcoffee.ui.fragment
 
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mcoffee.R
+import com.example.mcoffee.data.model.Record
 import com.example.mcoffee.databinding.FragmentCartBinding
 import com.example.mcoffee.ui.adapter.CartAdapter
 import com.example.mcoffee.ui.base.BaseFragment
@@ -16,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::inflate),
     IOnProductItemClickListener {
 
-    private val cartViewModel: CartViewModel by viewModels()
+    private val cartViewModel: CartViewModel by activityViewModels()
 
     private lateinit var mCartAdapter: CartAdapter
     override fun observeViewModel() {
@@ -41,8 +45,9 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
     }
 
     private fun showProductsInCart() {
-        cartViewModel.productList.observe(viewLifecycleOwner) {
-            mCartAdapter = CartAdapter(it)
+        cartViewModel.recordList.observe(viewLifecycleOwner) {
+            mCartAdapter = CartAdapter()
+            mCartAdapter.submitList(it)
             binding.recyclerViewProductsInCart.apply {
                 adapter = mCartAdapter
                 layoutManager = LinearLayoutManager(requireContext())
@@ -52,10 +57,12 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
     }
 
     private fun order() {
-        mCartAdapter.selectedItemIndex.observe(viewLifecycleOwner) {
-            for (index in it) {
-                cartViewModel.order(index)
-            }
+        mCartAdapter.selectedItem.observe(viewLifecycleOwner) {
+            Log.d("manh", "order at line 59: $it")
+            findNavController().navigate(
+                R.id.action_cartFragment_to_orderFragment2,
+                bundleOf("records" to it)
+            )
         }
     }
 

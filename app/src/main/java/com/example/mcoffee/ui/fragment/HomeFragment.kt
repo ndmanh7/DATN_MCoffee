@@ -3,6 +3,7 @@ package com.example.mcoffee.ui.fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,6 +18,8 @@ import com.example.mcoffee.ui.base.BaseFragment
 import com.example.mcoffee.ui.interfaces.IOnCategoryItemClickListener
 import com.example.mcoffee.ui.interfaces.IOnProductItemClickListener
 import com.example.mcoffee.ui.viewmodel.HomeViewModel
+import com.example.mcoffee.ui.viewmodel.UserInformationViewModel
+import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,6 +28,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     IOnProductItemClickListener {
 
     private val homeViewModel: HomeViewModel by viewModels()
+    private val userInformationViewModel: UserInformationViewModel by activityViewModels()
 
     private var categoryList = arrayListOf<Category>()
 
@@ -34,6 +38,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel.getProductListByCategory(0)
+        userInformationViewModel.getUserInfo()
     }
 
     override fun observeViewModel() {
@@ -42,13 +47,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         showProductListByCategory()
     }
 
-    override fun bindView() {
-        super.bindView()
-//        homeViewModel.getAllCategories()
-    }
-
     override fun onCategoryItemClick(view: View, position: Int) {
-        Log.d("manh", "onCategoryItemClick at line 51: $position")
         homeViewModel.getProductListByCategory(position)
     }
 
@@ -65,12 +64,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun showProductListByCategory() {
-        Log.d("manh", "showProductListByCategory at line 66: ")
         homeViewModel.productListByCategory.observe(viewLifecycleOwner) {
             mProductAdapter = ProductListAdapter(it)
             binding.recyclerViewProduct.apply {
                 adapter = mProductAdapter
                 layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
+
                 mProductAdapter.setClickListener(this@HomeFragment)
             }
         }

@@ -28,15 +28,4 @@ class OrderViewModel @Inject constructor(
         }
     }
 
-    fun increaseAmount() {
-        _amount.value = _amount.value?.plus(1)
-    }
-
-    fun decreaseAmount() {
-        if (_amount.value!! > 1) {
-            _amount.value = _amount.value?.minus(1)
-
-        }
-    }
-
 }

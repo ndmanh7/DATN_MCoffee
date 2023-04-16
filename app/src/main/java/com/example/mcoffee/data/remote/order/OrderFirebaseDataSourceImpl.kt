@@ -13,12 +13,17 @@ class OrderFirebaseDataSourceImpl(
 ) : OrderFirebaseDataSource {
     override suspend fun addOrder(order: Order): FireBaseState<String> {
         return try {
-            val orderRef = databaseReference.child("Order").child(order.uid).push()
+            val orderRef = databaseReference.child("Order").child(auth.currentUser!!.uid).push()
+            val cartRef = databaseReference.child("Cart").child(auth.currentUser!!.uid)
             order.apply {
                 userUid = auth.currentUser!!.uid
                 uid = orderRef.key.toString()
+                status = false
             }
             orderRef.setValue(order).await()
+            for (records in order.records) {
+                cartRef.child(records.uid).removeValue()
+            }
             FireBaseState.Success("")
         } catch (ex: FirebaseException) {
             FireBaseState.Fail(ex.toString())

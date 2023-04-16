@@ -1,5 +1,6 @@
 package com.example.mcoffee.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,17 +9,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mcoffee.data.model.Order
 import com.example.mcoffee.data.model.Product
+import com.example.mcoffee.data.model.Record
 import com.example.mcoffee.databinding.ItemCartBinding
 import com.example.mcoffee.ui.interfaces.IOnProductItemClickListener
 
-class CartAdapter(
-    val productList: ArrayList<Product>
-) : RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
+class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
 
     private lateinit var itemClickListener: IOnProductItemClickListener
+    private lateinit var recordList: ArrayList<Record>
+
 
     var selectedItemIndex = MutableLiveData<MutableList<Int>>()
-    var selectedItem = MutableLiveData<MutableList<Order>>()
+    var selectedItem = MutableLiveData<MutableList<Record>>()
+
+    fun submitList(list: ArrayList<Record>) {
+        this.recordList = list
+    }
 
     inner class CartViewHolder(val binding: ItemCartBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
@@ -38,41 +44,54 @@ class CartAdapter(
         return CartViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = productList.size
+    override fun getItemCount(): Int = recordList.size
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         holder.binding.apply {
-            tvProductName.text = productList[position].productName
-            tvAmountInCart.text = "1"
+            tvProductName.text = recordList[position].product?.productName
+            tvAmountInCart.text = recordList[position].amount.toString()
+            tvPrice.text = recordList[position].product?.price.toString()
 
             Glide.with(this.root)
-                .load(productList[position].image)
+                .load(recordList[position].product?.image)
                 .into(imgProductImageCart)
 
-            var amount = tvAmountInCart.text.toString().toInt()
+            var amount = 1
+            val totalPrice = recordList[position].product?.price!!
 
             btnAddInCart.setOnClickListener {
                 tvAmountInCart.text = "${++amount}"
-                tvPrice.text = "${amount*35000}"
+                tvPrice.text = "${amount * recordList[position].product?.price!!}"
+                recordList[position].apply {
+                    this.totalPrice = amount * recordList[position].product?.price!!
+                    this.amount = amount
+                }
             }
 
             btnMinusInCart.setOnClickListener {
                 if (amount > 1) {
                     tvAmountInCart.text = "${--amount}"
-                    tvPrice.text = "${amount*35000}"
+                    tvPrice.text = "${amount * recordList[position].product?.price!!}"
+                    recordList[position].apply {
+                        this.totalPrice = amount * recordList[position].product?.price!!
+                        this.amount = amount
+                    }
                 }
             }
             selectedItemIndex.value = arrayListOf()
+            selectedItem.value = arrayListOf()
+            recordList[position].apply {
+                this.totalPrice = totalPrice
+                this.amount = amount
+            }
+
 
             cbItem.setOnCheckedChangeListener { _, isChecked ->
-                val order = Order(
-                    productName = tvProductName.text.toString(),
-                    orderAmount = tvAmountInCart.text.toString().toInt(),
-                )
                 if (isChecked) {
-                    selectedItemIndex.postValue(selectedItemIndex.value?.apply { add(position) } )
+                    selectedItem.postValue(selectedItem.value?.apply { add(recordList[position]) } )
                 } else {
-                    selectedItemIndex.postValue(selectedItemIndex.value?.apply { remove(position) } )
+                    selectedItem.postValue(selectedItem.value?.apply { remove(recordList[position]) } )
 
                 }
 

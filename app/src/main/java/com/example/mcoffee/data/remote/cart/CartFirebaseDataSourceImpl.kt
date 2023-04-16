@@ -3,6 +3,7 @@ package com.example.mcoffee.data.remote.cart
 import android.util.Log
 import com.example.mcoffee.data.model.Cart
 import com.example.mcoffee.data.model.Product
+import com.example.mcoffee.data.model.Record
 import com.example.mcoffee.data.remote.FireBaseState
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -21,31 +22,32 @@ class CartFirebaseDataSourceImpl(
     private val databaseReference: DatabaseReference
 ) : CartFirebaseDataSource {
 
-    override suspend fun addToCart(product: Product): FireBaseState<String> {
+    override suspend fun addToCart(record: Record): FireBaseState<String> {
         return try {
-            val cartRef = databaseReference.child("Cart").child(auth.currentUser!!.uid).child(product.uid)
-            val result = cartRef.setValue(product).await()
+            val cartRef = databaseReference.child("Cart").child(auth.currentUser!!.uid).push()
+            record.uid = cartRef.key.toString()
+            val result = cartRef.setValue(record).await()
             FireBaseState.Success("")
         } catch (ex: FirebaseException) {
             FireBaseState.Fail(ex.toString())
         }
     }
 
-    override suspend fun getProductsInCart(): Flow<ArrayList<Product>> {
-        val productList = arrayListOf<Product>()
+    override suspend fun getProductsInCart(): Flow<ArrayList<Record>> {
+        val recordList = arrayListOf<Record>()
         val cartRef = databaseReference.child("Cart").child(auth.currentUser!!.uid)
 
         return callbackFlow {
             val valueEventListener = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    productList.clear()
-                    for (prod in snapshot.children) {
-                        val product = prod.getValue(Product::class.java)
-                        product?.let {
-                            productList.add(it)
+                    recordList.clear()
+                    for (rec in snapshot.children) {
+                        val record = rec.getValue(Record::class.java)
+                        record?.let {
+                            recordList.add(it)
                         }
                     }
-                    trySend(productList)
+                    trySend(recordList)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -58,8 +60,8 @@ class CartFirebaseDataSourceImpl(
         }
     }
 
-    override fun removeFromCart(product: Product) {
-        val cartRef = databaseReference.child("Cart").child(auth.currentUser!!.uid).child(product.uid).removeValue()
+    override fun removeFromCart(record: Record) {
+        val cartRef = databaseReference.child("Cart").child(auth.currentUser!!.uid).child(record.uid).removeValue()
     }
 
 }
