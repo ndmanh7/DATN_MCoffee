@@ -1,4 +1,4 @@
-package com.example.mcoffee.ui.fragment
+package com.example.mcoffee.ui.fragment.user
 
 import android.os.Bundle
 import android.util.Log
@@ -47,6 +47,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         showProductListByCategory()
     }
 
+    override fun bindView() {
+        super.bindView()
+        binding.imgSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
+    }
+
     override fun onCategoryItemClick(view: View, position: Int) {
         homeViewModel.getProductListByCategory(position)
     }
@@ -77,11 +84,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onProductItemClick(view: View, position: Int) {
         homeViewModel.productListByCategory.observe(viewLifecycleOwner) {
-            val productInfoBundle = Bundle()
-            productInfoBundle.apply {
-                putSerializable("productInfo", it[position])
-            }
-            findNavController().navigate(R.id.action_homeFragment_to_detailActivity, productInfoBundle)
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToProductDetailFragment(it[position])
+            findNavController().navigate(action)
         }
     }
 

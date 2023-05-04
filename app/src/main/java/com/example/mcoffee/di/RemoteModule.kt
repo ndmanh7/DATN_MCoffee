@@ -12,6 +12,7 @@ import com.example.mcoffee.data.remote.product.ProductFirebaseDataSource
 import com.example.mcoffee.data.remote.product.ProductFirebaseDataSourceImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.StorageReference
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,8 +37,8 @@ object RemoteModule {
 
     @Provides
     @Singleton
-    fun provideProductFirebaseDataSource(databaseReference: DatabaseReference) : ProductFirebaseDataSource {
-        return ProductFirebaseDataSourceImpl(databaseReference)
+    fun provideProductFirebaseDataSource(databaseReference: DatabaseReference, storageReference: StorageReference) : ProductFirebaseDataSource {
+        return ProductFirebaseDataSourceImpl(databaseReference, storageReference)
     }
 
     @Provides

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mcoffee.data.model.category.Category
 import com.example.mcoffee.databinding.ItemCategoryListBinding
+import com.example.mcoffee.ui.base.BaseAdapter
 import com.example.mcoffee.ui.interfaces.IOnCategoryItemClickListener
 
 class CategoryAdapter(
@@ -44,3 +45,19 @@ class CategoryAdapter(
     }
 
 }
+
+//class CategoryAdapter : BaseAdapter<ItemCategoryListBinding, Category>() {
+//    override fun bindViewHolder(binding: ItemCategoryListBinding, item: Category) {
+//        binding.apply {
+//            item.also {
+//                tvCategoryName.text = it.categoryName
+//            }
+//        }
+//    }
+//
+//    override val bindingInflater: (LayoutInflater, ViewGroup?, Int) -> ItemCategoryListBinding
+//        get() = { inflater, parent, _ ->
+//            ItemCategoryListBinding.inflate(inflater, parent, false)
+//        }
+//
+//}

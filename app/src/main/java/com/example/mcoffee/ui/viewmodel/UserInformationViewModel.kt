@@ -28,7 +28,6 @@ class UserInformationViewModel @Inject constructor(
     fun getUserInfo() {
         viewModelScope.launch {
             userRepository.getUserInfo().collect {
-                Log.d("manh", "getUserInfo at line 29: $it")
                 _userInfo.postValue(it)
             }
         }

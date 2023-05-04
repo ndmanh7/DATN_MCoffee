@@ -41,8 +41,6 @@ class HomeViewModel @Inject constructor(
 
                 productRepository.getProductsByCategory(it[position]).collect { productList ->
                     _productListByCategory.value = productList
-                    Log.d("manh", "getProductListByCategory at line 44: $productList")
-
                 }
             }
 

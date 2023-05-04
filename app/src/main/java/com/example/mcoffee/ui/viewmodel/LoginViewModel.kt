@@ -7,7 +7,9 @@ import com.example.mcoffee.domain.repo.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -17,8 +19,8 @@ class LoginViewModel @Inject constructor(
     private val userRepository: UserRepository,
 ) : ViewModel() {
 
-    private val _loginState = MutableSharedFlow<AuthRequestState>()
-    val loginState: SharedFlow<AuthRequestState> = _loginState
+    private val _loginState = MutableStateFlow<AuthRequestState>(AuthRequestState.Fail(""))
+    val loginState = _loginState.asStateFlow()
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
@@ -31,6 +33,14 @@ class LoginViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 _loginState.emit(AuthRequestState.Fail(""))
                 userRepository.logout()
+            }
+        }
+    }
+
+    fun clearLoginState() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _loginState.emit(AuthRequestState.Fail(""))
             }
         }
     }

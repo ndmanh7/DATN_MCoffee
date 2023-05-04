@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -45,6 +47,7 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
     }
 
     override fun getItemCount(): Int = recordList.size
+
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
@@ -103,5 +106,6 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
     fun setClickListener(clickListener: IOnProductItemClickListener) {
         this.itemClickListener = clickListener
     }
+
 
 }

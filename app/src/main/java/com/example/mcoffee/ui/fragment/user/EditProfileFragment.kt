@@ -1,4 +1,4 @@
-package com.example.mcoffee.ui.fragment
+package com.example.mcoffee.ui.fragment.user
 
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels

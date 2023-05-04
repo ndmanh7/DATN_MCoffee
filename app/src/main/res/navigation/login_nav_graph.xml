@@ -6,11 +6,11 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.mcoffee.ui.fragment.RegisterFragment"
+        android:name="com.example.mcoffee.ui.fragment.user.RegisterFragment"
         android:label="RegisterFragment" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.mcoffee.ui.fragment.LoginFragment"
+        android:name="com.example.mcoffee.ui.fragment.user.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -19,10 +19,18 @@
             android:id="@+id/action_loginFragment_to_mainActivity"
             app:destination="@id/mainActivity"
             />
+        <action
+            android:id="@+id/action_loginFragment_to_adminActivity"
+            app:destination="@id/adminActivity" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
         android:name="com.example.mcoffee.ui.activity.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+    <activity
+        android:id="@+id/adminActivity"
+        android:name="com.example.mcoffee.ui.activity.AdminActivity"
+        android:label="AdminActivity"
+        tools:layout="@layout/activity_admin"/>
 </navigation>

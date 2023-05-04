@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/adminHomeFragment"
+        android:title="@string/menu_home"
+        android:icon="@drawable/home"
+        android:menuCategory="secondary"/>
+
+    <item android:id="@+id/adminCategoryManageFragment"
+        android:title="@string/menu_category_admin"
+        android:icon="@drawable/baseline_category_24"
+        android:menuCategory="secondary"/>
+
+    <item
+        android:id="@+id/adminOrderManageFragment"
+        android:title="@string/menu_order_admin"
+        android:icon="@drawable/ic_order"
+        android:menuCategory="secondary"/>
+
+    <item
+        android:title="@string/menu_statics_admin"
+        android:icon="@drawable/baseline_analytics_24"
+        android:menuCategory="secondary"/>
+
+</menu>

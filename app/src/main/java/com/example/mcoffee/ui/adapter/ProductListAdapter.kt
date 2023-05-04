@@ -1,7 +1,5 @@
 package com.example.mcoffee.ui.adapter
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +42,8 @@ class ProductListAdapter(
                 .load(productList[position].image)
                 .into(imgProduct)
         }
+
+
     }
 
     fun setClickListener(clickListener: IOnProductItemClickListener) {

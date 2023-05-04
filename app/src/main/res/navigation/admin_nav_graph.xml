@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/admin_nav_graph"
+    app:startDestination="@id/adminHomeFragment">
+
+
+    <fragment
+        android:id="@+id/adminHomeFragment"
+        android:name="com.example.mcoffee.ui.fragment.admin.AdminHomeFragment"
+        android:label="AdminHomeFragment" >
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminAddProductFragment"
+            app:destination="@id/adminAddProductFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminEditProductFragment"
+            app:destination="@id/adminEditProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminCategoryManageFragment"
+        android:name="com.example.mcoffee.ui.fragment.admin.AdminCategoryManageFragment"
+        android:label="AdminCategoryManageFragment" >
+        <action
+            android:id="@+id/action_adminCategoryManageFragment_to_adminAddCategoryFragment"
+            app:destination="@id/adminAddCategoryFragment" />
+        <action
+            android:id="@+id/action_adminCategoryManageFragment_to_adminEditCategoryFragment"
+            app:destination="@id/adminEditCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminOrderManageFragment"
+        android:name="com.example.mcoffee.ui.fragment.admin.AdminOrderManageFragment"
+        android:label="AdminOrderManageFragment" />
+    <fragment
+        android:id="@+id/adminAddProductFragment"
+        android:name="com.example.mcoffee.ui.fragment.admin.AdminAddProductFragment"
+        android:label="AdminAddProductFragment" />
+    <fragment
+        android:id="@+id/adminEditProductFragment"
+        android:name="com.example.mcoffee.ui.fragment.admin.AdminEditProductFragment"
+        android:label="AdminEditProductFragment"
+        >
+
+        <argument android:name="productInfo"
+            app:argType="com.example.mcoffee.data.model.Product"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/adminAddCategoryFragment"
+        android:name="com.example.mcoffee.ui.fragment.admin.AdminAddCategoryFragment"
+        android:label="AdminAddCategoryFragment" />
+    <fragment
+        android:id="@+id/adminEditCategoryFragment"
+        android:name="com.example.mcoffee.ui.fragment.admin.AdminEditCategoryFragment"
+        android:label="AdminEditCategoryFragment">
+        <argument android:name="category"
+            app:argType="com.example.mcoffee.data.model.category.Category"/>
+    </fragment>
+
+
+</navigation>

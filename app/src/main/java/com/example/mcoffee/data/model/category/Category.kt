@@ -8,4 +8,4 @@ data class Category(
     var uid: String = "",
     var categoryName: String = "",
     var products: List<Product>? = null
-)
+): java.io.Serializable

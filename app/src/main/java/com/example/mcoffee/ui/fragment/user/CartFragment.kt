@@ -1,14 +1,11 @@
-package com.example.mcoffee.ui.fragment
+package com.example.mcoffee.ui.fragment.user
 
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mcoffee.R
-import com.example.mcoffee.data.model.Record
 import com.example.mcoffee.databinding.FragmentCartBinding
 import com.example.mcoffee.ui.adapter.CartAdapter
 import com.example.mcoffee.ui.base.BaseFragment
@@ -40,6 +37,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
             btnOrder.setOnClickListener {
                 order()
 //                findNavController().popBackStack()
+
             }
         }
     }
@@ -58,9 +56,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
 
     private fun order() {
         mCartAdapter.selectedItem.observe(viewLifecycleOwner) {
-            Log.d("manh", "order at line 59: $it")
             findNavController().navigate(
-                R.id.action_cartFragment_to_orderFragment2,
+                R.id.action_cartFragment_to_orderFragment,
                 bundleOf("records" to it)
             )
         }

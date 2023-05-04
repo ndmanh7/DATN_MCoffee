@@ -1,4 +1,4 @@
-package com.example.mcoffee.ui.fragment
+package com.example.mcoffee.ui.fragment.user
 
 import android.util.Log
 import androidx.fragment.app.activityViewModels
@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
     private val userInformationViewModel: UserInformationViewModel by activityViewModels()
+    private val loginViewModel: LoginViewModel by activityViewModels()
 
     override fun observeViewModel() {
         super.observeViewModel()
@@ -38,10 +39,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 
+        binding.viewMyOder.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_orderHistoryFragment)
+        }
+
         binding.viewLogOut.setOnClickListener {
-            Log.d("manh", "bindView at line 42: ")
             LoginConfig.loginState(requireContext(), "logged_out")
-            findNavController().popBackStack(R.id.login_nav_graph, false)
+            loginViewModel.logout()
+            requireActivity().finish()
         }
     }
 

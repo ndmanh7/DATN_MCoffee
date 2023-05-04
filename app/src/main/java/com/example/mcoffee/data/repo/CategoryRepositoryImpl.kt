@@ -13,4 +13,19 @@ class CategoryRepositoryImpl(
         return categoryFirebaseDataSource.getAllCategories()
     }
 
+    override suspend fun addCategoryByAdmin(category: Category): Boolean {
+        return categoryFirebaseDataSource.addCategoryByAdmin(category)
+    }
+
+    override suspend fun editCategoryByAdmin(
+        category: Category,
+        newInformation: HashMap<String, Any?>
+    ): Boolean {
+        return categoryFirebaseDataSource.editCategoryByAdmin(category, newInformation)
+    }
+
+    override suspend fun deleteCategoryByAdmin(category: Category): Boolean {
+        return categoryFirebaseDataSource.deleteCategoryByAdmin(category)
+    }
+
 }

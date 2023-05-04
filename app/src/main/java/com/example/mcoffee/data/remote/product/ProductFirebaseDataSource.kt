@@ -6,4 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface ProductFirebaseDataSource {
     suspend fun getProductsByCategory(category: Category): Flow<ArrayList<Product>>
+    fun searchProduct(searchString: String): Flow<ArrayList<Product>>
+    suspend fun addProductByAdmin(product: Product): Boolean
+    suspend fun editProductByAdmin(product: Product, updatedInformation: HashMap<String, Any?>): Boolean
+    suspend fun removeProductByAdmin(product: Product): Boolean
 }

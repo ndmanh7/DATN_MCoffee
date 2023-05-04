@@ -6,9 +6,12 @@ import com.google.firebase.database.IgnoreExtraProperties
 data class Order(
     var uid: String = "",
     var userUid: String = "",
+    var receiverName: String = "",
+    var receiverPhone: String = "",
+    var receiverAddress: String = "",
     var records: List<Record> = emptyList(),
     var orderDate: String = "",
     var totalPrice: Int = 0,
-    var status: Boolean = false
+    var isConfirmed: Boolean = false
 ) {
 }

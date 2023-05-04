@@ -9,5 +9,6 @@ data class Users(
     var password: String = "",
     var phoneNumber: String = "",
     var firstName: String = "",
-    var lastName: String = ""
+    var lastName: String = "",
+    var isAdmin: Boolean = false
 )

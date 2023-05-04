@@ -14,4 +14,11 @@
     <string name="menu_home">Trang chủ</string>
     <string name="menu_cart">Giỏ hàng</string>
     <string name="menu_profile">Tôi</string>
+
+    //menu title admin
+    <string name="menu_category_admin">Danh mục</string>
+    <string name="menu_order_admin">Đơn hàng</string>
+    <string name="menu_statics_admin">Thống kê</string>
+
+
 </resources>

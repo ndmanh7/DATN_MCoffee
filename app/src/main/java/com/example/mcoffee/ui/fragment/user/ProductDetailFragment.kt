@@ -1,4 +1,4 @@
-package com.example.mcoffee.ui.fragment
+package com.example.mcoffee.ui.fragment.user
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -7,10 +7,9 @@ import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.mcoffee.R
-import com.example.mcoffee.data.model.Order
-import com.example.mcoffee.data.model.Product
 import com.example.mcoffee.data.model.Record
 import com.example.mcoffee.data.remote.FireBaseState
 import com.example.mcoffee.databinding.FragmentProductDetailBinding
@@ -22,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProductDetailFragment: BaseFragment<FragmentProductDetailBinding>(FragmentProductDetailBinding::inflate) {
 
     private val productDetailViewModel: ProductDetailViewModel by viewModels()
+    private val args: ProductDetailFragmentArgs by navArgs()
 
     override fun observeViewModel() {
         super.observeViewModel()
@@ -32,7 +32,7 @@ class ProductDetailFragment: BaseFragment<FragmentProductDetailBinding>(Fragment
         productDetailViewModel.addToCartState.observe(viewLifecycleOwner) { resultState ->
             when(resultState) {
                 is FireBaseState.Success -> {
-                    findNavController().popBackStack()
+//                    findNavController().popBackStack()
                 }
 
                 else -> {
@@ -50,7 +50,7 @@ class ProductDetailFragment: BaseFragment<FragmentProductDetailBinding>(Fragment
 
         binding.apply {
             btnOrder.setOnClickListener {
-                val productInfo : Product = requireActivity().intent.getSerializableExtra("productInfo") as Product
+                val productInfo = args.productDetail
                 val record = Record(
                     product = productInfo,
                     amount = 1,
@@ -70,7 +70,7 @@ class ProductDetailFragment: BaseFragment<FragmentProductDetailBinding>(Fragment
     }
 
     private fun addToCart() {
-        val productInfo : Product = requireActivity().intent.getSerializableExtra("productInfo") as Product
+        val productInfo =  args.productDetail
         val record = Record(
             product = productInfo,
             amount = 1
@@ -80,8 +80,7 @@ class ProductDetailFragment: BaseFragment<FragmentProductDetailBinding>(Fragment
     }
 
     private fun showProductInfoFromHomeFragment() {
-        val productInfo : Product = requireActivity().intent.getSerializableExtra("productInfo") as Product
-
+        val productInfo =  args.productDetail
         binding.apply {
             productInfo.apply {
                 tvDetailProductName.text = productName

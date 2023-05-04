@@ -61,8 +61,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
     implementation 'androidx.fragment:fragment-ktx:1.5.5'
 
     //navigation
@@ -83,7 +83,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
 
     //glide
-    implementation "com.github.bumptech.glide:glide:4.13.0"
+    implementation "com.github.bumptech.glide:glide:4.15.1"
     implementation "com.github.bumptech.glide:okhttp3-integration:4.3.1"
     kapt "com.github.bumptech.glide:compiler:4.3.1"
 
@@ -94,6 +94,8 @@ dependencies {
 
     // Circle Image View
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
 }
 
 // Allow references to generated code

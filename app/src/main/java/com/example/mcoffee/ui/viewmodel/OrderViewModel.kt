@@ -19,6 +19,9 @@ class OrderViewModel @Inject constructor(
     private var _addOrderState = MutableLiveData<FireBaseState<String>>()
     val addOrderState: LiveData<FireBaseState<String>> get() = _addOrderState
 
+    private var _address = MutableLiveData<Map<String, String>>()
+    val address: LiveData<Map<String, String>> get() = _address
+
     private var _amount = MutableLiveData<Int>(1)
     val amount: LiveData<Int> get() = _amount
 
@@ -26,6 +29,14 @@ class OrderViewModel @Inject constructor(
         viewModelScope.launch {
             _addOrderState.value = orderRepository.addOrder(order)
         }
+    }
+
+    fun addAddress(name: String, phoneNumber: String, address: String) {
+        _address.value = mapOf(
+            "name" to name,
+            "phoneNumber" to phoneNumber,
+            "address" to address
+        )
     }
 
 }
