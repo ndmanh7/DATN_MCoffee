@@ -23,6 +23,8 @@
             android:text="test"
             android:textSize="15dp"
             android:textAlignment="center"
+            android:fontFamily="@font/sora_light"
+            android:textColor="@color/black"
             />
 
 

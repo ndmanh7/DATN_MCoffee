@@ -13,4 +13,8 @@
     <color name="primary_color">#C67C4E</color>
 
     <color name="background_color">#F9F9F9</color>
+    <color name="green">#11FF00</color>
+    <color name="red">#FF0000</color>
+
+
 </resources>

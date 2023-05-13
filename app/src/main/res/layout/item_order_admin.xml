@@ -97,12 +97,31 @@
 
             </LinearLayout>
 
-            <TextView
-                android:layout_gravity="end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chi tiết đơn hàng >>"
-                android:textColor="#03A9F4"/>
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_order_state"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="state"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_gravity="end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chi tiết đơn hàng >>"
+                    android:textColor="#03A9F4"/>
+
+            </LinearLayout>
+
+
+
 
         </LinearLayout>
 

@@ -3,15 +3,19 @@ package com.example.mcoffee.ui.fragment.user
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.mcoffee.R
 import com.example.mcoffee.data.model.category.Category
 import com.example.mcoffee.databinding.FragmentHomeBinding
+import com.example.mcoffee.ui.activity.LoginActivity
 import com.example.mcoffee.ui.adapter.CategoryAdapter
 import com.example.mcoffee.ui.adapter.ProductListAdapter
 import com.example.mcoffee.ui.base.BaseFragment
@@ -35,6 +39,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private lateinit var mCategoryAdapter: CategoryAdapter
     private lateinit var mProductAdapter: ProductListAdapter
 
+    private var backPressedTime: Long = 0
+    lateinit var backToast: Toast
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel.getProductListByCategory(0)
@@ -45,6 +52,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         super.observeViewModel()
         showCategoryList()
         showProductListByCategory()
+        userInformationViewModel.userInfo.observe(viewLifecycleOwner) {
+            Glide.with(requireContext())
+                .load(it.image)
+                .into(binding.imgUser)
+        }
     }
 
     override fun bindView() {
@@ -52,6 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.imgSearch.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }
+        pressAgainToExit()
     }
 
     override fun onCategoryItemClick(view: View, position: Int) {
@@ -88,6 +101,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 HomeFragmentDirections.actionHomeFragmentToProductDetailFragment(it[position])
             findNavController().navigate(action)
         }
+    }
+
+    private fun pressAgainToExit() {
+       requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                backToast = Toast.makeText(
+                    requireContext(),
+                    "Nhấn lần nữa để thoát",
+                    Toast.LENGTH_LONG
+                )
+                if (backPressedTime + 2000 > System.currentTimeMillis()) {
+                    backToast.cancel()
+                    requireActivity().finish()
+                    return
+                } else {
+                    backToast.show()
+                }
+                backPressedTime = System.currentTimeMillis()
+            }
+        })
     }
 
 

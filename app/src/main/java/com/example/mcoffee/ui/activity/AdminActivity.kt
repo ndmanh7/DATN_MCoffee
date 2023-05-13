@@ -31,6 +31,7 @@ class AdminActivity : AppCompatActivity() {
                 R.id.adminHomeFragment -> showBottomNav()
                 R.id.adminCategoryManageFragment -> showBottomNav()
                 R.id.adminOrderManageFragment -> showBottomNav()
+                R.id.adminStatisticsFragment -> showBottomNav()
                 else -> hideBottomNav()
             }
 

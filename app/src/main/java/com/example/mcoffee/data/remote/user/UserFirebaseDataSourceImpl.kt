@@ -1,6 +1,8 @@
 package com.example.mcoffee.data.remote.user
 
 import android.util.Log
+import androidx.core.net.toUri
+import com.example.mcoffee.data.model.user.UserRoles
 import com.example.mcoffee.data.model.user.Users
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -9,6 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -17,7 +20,8 @@ import kotlinx.coroutines.tasks.await
 
 class UserFirebaseDataSourceImpl(
     private val auth: FirebaseAuth,
-    private val databaseRef: DatabaseReference
+    private val databaseRef: DatabaseReference,
+    private val storageReference: StorageReference
 ) : UserFirebaseDataSource {
 
 
@@ -42,6 +46,7 @@ class UserFirebaseDataSourceImpl(
                             uid = it.uid
                             this.email = email
                             this.password = password
+                            this.role = UserRoles.CUSTOMER
                         }
                     )
             }
@@ -85,11 +90,31 @@ class UserFirebaseDataSourceImpl(
             if (users != null) {
                 users.uid = auth.currentUser!!.uid
                 val userRef = databaseRef.child("User").child(users.uid)
-                userRef.updateChildren(updatedInformation)
-                true
-            } else {
-                false
+                val storageRef = storageReference.child(users.uid)
+                if (users.image != null) {
+                    storageRef.putFile(users.image.toUri()).continueWithTask { task ->
+                        if (!task.isSuccessful) {
+                            task.exception?.let {
+                                throw it
+                            }
+                        }
+                        storageRef.downloadUrl
+                    }.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val downloadUri = task.result
+                            updatedInformation["/image"] = downloadUri.toString()
+                            userRef.updateChildren(updatedInformation)
+                        }
+                        Log.d("manh", "updateUserProfile at line 107: ${updatedInformation["/image"]}")
+                    }.addOnFailureListener {
+                        updatedInformation["/image"] = users.image
+                        Log.d("manh", "updateUserProfile at line 109: ${updatedInformation["/image"]}")
+                    }.await()
+                    Log.d("manh", "updateUserProfile at line 112: ${updatedInformation["/image"]}")
+                    userRef.updateChildren(updatedInformation)
+                }
             }
+            true
         } catch (ex: FirebaseException) {
             false
         }

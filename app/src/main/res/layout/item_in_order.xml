@@ -92,7 +92,7 @@
             android:fontFamily="@font/sora_semibold"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:layout_marginEnd="15dp"/>
+            />
 
 
     </RelativeLayout>

@@ -127,19 +127,24 @@ class ProductFirebaseDataSourceImpl(
             if (product != null) {
                 val productRef = databaseReference.child("Product").child(product.uid)
                 val storageRef = storageReference.child(product.uid)
-                storageRef.putFile(product.image.toUri()).continueWithTask { task ->
-                    if (!task.isSuccessful) {
-                        task.exception?.let {
-                            throw it
+                if (product.image == null) {
+                    storageRef.putFile(product.image.toUri()).continueWithTask { task ->
+                        if (!task.isSuccessful) {
+                            task.exception?.let {
+                                throw it
+                            }
                         }
+                        storageRef.downloadUrl
+                    }.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val downloadUri = task.result
+                            updatedInformation["/image"] = downloadUri.toString()
+                        }
+                    }.addOnFailureListener {
+                        updatedInformation["/image"] = product.image
                     }
-                    storageRef.downloadUrl
-                }.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val downloadUri = task.result
-                        updatedInformation["/image"] = downloadUri.toString()
-                    }
-                }.await()
+                        .await()
+                }
                 productRef.updateChildren(updatedInformation)
             }
             true

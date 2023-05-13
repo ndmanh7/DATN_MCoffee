@@ -1,5 +1,6 @@
 package com.example.mcoffee.ui.viewmodel
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -25,6 +26,9 @@ class UserInformationViewModel @Inject constructor(
     private val _updateProfileState = MutableSharedFlow<FireBaseState<String>>()
     val updateProfileState: SharedFlow<FireBaseState<String>> get() = _updateProfileState
 
+    private val _userImageUri = MutableLiveData<Uri>()
+    val userImageUri: LiveData<Uri> get() = _userImageUri
+
     fun getUserInfo() {
         viewModelScope.launch {
             userRepository.getUserInfo().collect {
@@ -40,5 +44,12 @@ class UserInformationViewModel @Inject constructor(
             )
         }
     }
+
+    fun getImage(uri: Uri) {
+        viewModelScope.launch {
+            _userImageUri.value = uri
+        }
+    }
+
 
 }

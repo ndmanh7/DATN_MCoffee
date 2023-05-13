@@ -60,8 +60,16 @@ class CartFirebaseDataSourceImpl(
         }
     }
 
-    override fun removeFromCart(record: Record) {
-        val cartRef = databaseReference.child("Cart").child(auth.currentUser!!.uid).child(record.uid).removeValue()
+    override fun removeFromCart(recordList: List<Record>): FireBaseState<String> {
+        return try {
+            val cartRef = databaseReference.child("Cart").child(auth.currentUser!!.uid)
+            for (records in recordList) {
+                cartRef.child(records.uid).removeValue()
+            }
+            FireBaseState.Success("")
+        } catch (ex: FirebaseException) {
+            FireBaseState.Fail("Có lỗi xảy ra")
+        }
     }
 
 }

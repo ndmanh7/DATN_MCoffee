@@ -1,6 +1,8 @@
 package com.example.mcoffee.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -28,12 +30,16 @@ class ProductListInOrderAdapter : RecyclerView.Adapter<ProductListInOrderAdapter
 
     override fun getItemCount(): Int = recordList.size
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ProductListInOrderViewHolder, position: Int) {
         holder.binding.apply {
             recordList[position].also {
                 tvProductName.text = it.product?.productName
-                tvAmountInCart.text = it.amount.toString()
-                tvPrice.text = it.totalPrice.toString()
+                tvAmountInCart.text = "x" + it.amount.toString()
+                tvPrice.text = it.totalPrice.toString() + " đ"
+
+                btnAddInCart.visibility = View.GONE
+                btnMinusInCart.visibility = View.GONE
 
                 Glide.with(root)
                     .load(it.product?.image)

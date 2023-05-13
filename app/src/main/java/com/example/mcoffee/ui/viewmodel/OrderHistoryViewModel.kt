@@ -9,6 +9,7 @@ import com.example.mcoffee.data.model.Order
 import com.example.mcoffee.domain.repo.OrderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,6 +23,9 @@ class OrderHistoryViewModel @Inject constructor(
 
     private var _oderListByDate = MutableLiveData<List<Order>>()
     val oderListByDate: LiveData<List<Order>> get() = _oderListByDate
+
+    private var _revenueByMonth = MutableLiveData<Int>()
+    val revenueByMonth: LiveData<Int> get() = _revenueByMonth
 
     fun getOrderList() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -40,10 +44,23 @@ class OrderHistoryViewModel @Inject constructor(
                         resultList.add(order)
                     }
                 }
-                Log.d("manh", "getOrderListByDate at line 42: $resultList")
                 _oderListByDate.postValue(resultList)
             }
         }
+    }
+
+    fun getRevenueByMonth(orderListByYear: List<Order>, month: String): Int {
+        var totalMonthRevenue = 0
+        for (order in orderListByYear) {
+            if (order.isConfirmed == "confirmed") {
+                val orderMonth = order.orderDate.split("-")[1]
+                if (orderMonth.contains(month)) {
+                    totalMonthRevenue += order.totalPrice
+                }
+            }
+        }
+        return totalMonthRevenue
+
     }
 
 }

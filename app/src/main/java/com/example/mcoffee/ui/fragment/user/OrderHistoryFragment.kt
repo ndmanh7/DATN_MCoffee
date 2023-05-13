@@ -3,6 +3,7 @@ package com.example.mcoffee.ui.fragment.user
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mcoffee.data.model.Order
@@ -23,7 +24,8 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding>(FragmentO
 
     private val tabItems = listOf(
         "Chờ xác nhận",
-        "Đã xác nhận"
+        "Đã xác nhận",
+        "Đã hủy"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,16 +49,20 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding>(FragmentO
             binding.tabLayout,
             binding.viewPager
         )
+
+        binding.imgBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
-    fun setUpTabLayoutWithViewPager(tabLayout: TabLayout, viewPager: ViewPager2) {
+    private fun setUpTabLayoutWithViewPager(tabLayout: TabLayout, viewPager: ViewPager2) {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabItems[position]
         }.attach()
     }
 
-    fun setUpViewPager(viewPager: ViewPager2, fragment: Fragment) {
-        val adapter = ViewPagerAdapter(fragment, 2)
+    private fun setUpViewPager(viewPager: ViewPager2, fragment: Fragment) {
+        val adapter = ViewPagerAdapter(fragment, 3)
         viewPager.adapter = adapter
     }
 

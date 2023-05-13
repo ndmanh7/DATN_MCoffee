@@ -80,7 +80,6 @@ class OrderFirebaseDataSourceImpl(
                             }
                         }
                     }
-                    Log.d("manh", "onDataChange at line 77: $orderList")
                     trySend(orderList)
                 }
 
@@ -91,6 +90,36 @@ class OrderFirebaseDataSourceImpl(
             }
             orderRef.addValueEventListener(orderValueListener)
             awaitClose { orderRef.removeEventListener(orderValueListener) }
+        }
+    }
+
+    override suspend fun confirmOrdersByAdmin(order: Order): FireBaseState<String> {
+        return try {
+            val isConfirmedRef = hashMapOf<String, Any?>("/confirmed" to "confirmed")
+            databaseReference.child("Order").child(order.userUid).child(order.uid).updateChildren(isConfirmedRef).await()
+            FireBaseState.Success(null)
+        } catch (ex: FirebaseException) {
+            FireBaseState.Fail("Có lỗi xảy ra")
+        }
+    }
+
+    override suspend fun abortOrdersByAdmin(order: Order): FireBaseState<String> {
+        return try {
+            val isConfirmedRef = hashMapOf<String, Any?>("/confirmed" to "aborted_by_admin")
+            databaseReference.child("Order").child(order.userUid).child(order.uid).updateChildren(isConfirmedRef).await()
+            FireBaseState.Success(null)
+        } catch (ex: FirebaseException) {
+            FireBaseState.Fail("Có lỗi xảy ra")
+        }
+    }
+
+    override suspend fun abortOrdersByUser(order: Order): FireBaseState<String> {
+        return try {
+            val isConfirmedRef = hashMapOf<String, Any?>("/confirmed" to "aborted_by_user")
+            databaseReference.child("Order").child(order.userUid).child(order.uid).updateChildren(isConfirmedRef).await()
+            FireBaseState.Success(null)
+        } catch (ex: FirebaseException) {
+            FireBaseState.Fail("Có lỗi xảy ra")
         }
     }
 }

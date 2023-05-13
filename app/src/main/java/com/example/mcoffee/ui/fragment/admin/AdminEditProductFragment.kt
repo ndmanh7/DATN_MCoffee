@@ -1,5 +1,6 @@
 package com.example.mcoffee.ui.fragment.admin
 
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -7,12 +8,14 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.R
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.mcoffee.data.model.Order
 import com.example.mcoffee.data.model.Product
 import com.example.mcoffee.data.model.category.Category
 import com.example.mcoffee.databinding.FragmentEditProductBinding
@@ -57,6 +60,17 @@ class AdminEditProductFragment : BaseFragment<FragmentEditProductBinding>(Fragme
             }
         }
 
+        lifecycleScope.launch {
+            editProductViewModel.editProductState.collect {isSuccess ->
+                if (isSuccess) {
+                    Toast.makeText(requireContext(), "Cập nhật sản phẩm thành công", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                } else {
+                    Toast.makeText(requireContext(), "Có lỗi xảy ra", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
     }
 
     override fun bindView() {
@@ -77,6 +91,7 @@ class AdminEditProductFragment : BaseFragment<FragmentEditProductBinding>(Fragme
                 if (editProductViewModel.productImageUri.value != null) {
                     productInfo.image = editProductViewModel.productImageUri.value.toString()
                 }
+
                 val updatedInformation = hashMapOf<String, Any?>(
                     "/productName" to edtProductName.text.toString(),
                     "/description" to edtProductDescription.text.toString(),
@@ -92,7 +107,7 @@ class AdminEditProductFragment : BaseFragment<FragmentEditProductBinding>(Fragme
 
             //remove product
             btnRemoveProduct.setOnClickListener {
-                editProductViewModel.removeProduct(productInfo)
+               showDialog(productInfo)
             }
         }
     }
@@ -106,6 +121,19 @@ class AdminEditProductFragment : BaseFragment<FragmentEditProductBinding>(Fragme
                 .load(productInfo.image)
                 .into(imgProductImage)
         }
+    }
+
+    private fun showDialog(productInfo: Product) {
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle("Xóa sản phẩm")
+            .setMessage("Xác nhận xóa sản phẩm?")
+            .setPositiveButton("Xác nhận") { _, _ ->
+                editProductViewModel.removeProduct(productInfo)
+            }
+            .setNegativeButton("Hủy bỏ") { _, _ -> }
+            .create()
+
+        alertDialog.show()
     }
 
     private fun setUpSpinner(list: List<Category>) {

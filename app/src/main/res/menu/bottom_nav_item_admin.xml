@@ -18,6 +18,7 @@
         android:menuCategory="secondary"/>
 
     <item
+        android:id="@id/adminStatisticsFragment"
         android:title="@string/menu_statics_admin"
         android:icon="@drawable/baseline_analytics_24"
         android:menuCategory="secondary"/>

@@ -19,8 +19,8 @@ class CartRepositoryImpl(
         return cartFirebaseDataSource.getProductsInCart()
     }
 
-    override fun removeFromCart(record: Record) {
-        cartFirebaseDataSource.removeFromCart(record)
+    override fun removeFromCart(recordList: List<Record>): FireBaseState<String> {
+        return cartFirebaseDataSource.removeFromCart(recordList)
     }
 
 }

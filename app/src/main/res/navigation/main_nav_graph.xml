@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_cartFragment_to_orderFragment"
             app:destination="@id/orderFragment" />
+        <action
+            android:id="@+id/action_cartFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/orderFragment"
@@ -58,7 +61,11 @@
     <fragment
         android:id="@+id/orderHistoryFragment"
         android:name="com.example.mcoffee.ui.fragment.user.OrderHistoryFragment"
-        android:label="OrderHistoryFragment" />
+        android:label="OrderHistoryFragment" >
+        <action
+            android:id="@+id/action_orderHistoryFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.example.mcoffee.ui.fragment.user.ProductDetailFragment"
@@ -82,5 +89,21 @@
         <action
             android:id="@+id/action_searchFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailFragment"
+        android:name="com.example.mcoffee.ui.fragment.user.OrderDetailFragment"
+        android:label="OrderDetailFragment" >
+        <argument
+            android:name="order"
+            app:argType="com.example.mcoffee.data.model.Order"/>
+    </fragment>
+    <fragment
+        android:id="@+id/notConfirmedOrderFragment"
+        android:name="com.example.mcoffee.ui.fragment.viewpager.NotConfirmedOrderFragment"
+        android:label="NotConfirmedOrderFragment" >
+        <action
+            android:id="@+id/action_notConfirmedOrderFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment" />
     </fragment>
 </navigation>

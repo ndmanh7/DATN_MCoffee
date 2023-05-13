@@ -54,7 +54,7 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
         holder.binding.apply {
             tvProductName.text = recordList[position].product?.productName
             tvAmountInCart.text = recordList[position].amount.toString()
-            tvPrice.text = recordList[position].product?.price.toString()
+            tvPrice.text = recordList[position].product?.price.toString() + " đ"
 
             Glide.with(this.root)
                 .load(recordList[position].product?.image)
@@ -65,7 +65,7 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
 
             btnAddInCart.setOnClickListener {
                 tvAmountInCart.text = "${++amount}"
-                tvPrice.text = "${amount * recordList[position].product?.price!!}"
+                tvPrice.text = "${amount * recordList[position].product?.price!!} đ"
                 recordList[position].apply {
                     this.totalPrice = amount * recordList[position].product?.price!!
                     this.amount = amount
@@ -75,7 +75,7 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
             btnMinusInCart.setOnClickListener {
                 if (amount > 1) {
                     tvAmountInCart.text = "${--amount}"
-                    tvPrice.text = "${amount * recordList[position].product?.price!!}"
+                    tvPrice.text = "${amount * recordList[position].product?.price!!} đ"
                     recordList[position].apply {
                         this.totalPrice = amount * recordList[position].product?.price!!
                         this.amount = amount

@@ -30,7 +30,9 @@
             android:layout_below="@id/img_product"
             android:layout_marginTop="10dp"
             android:text="Product Name"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:fontFamily="@font/sora_semibold"
+            android:textColor="@color/black"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_product_price"
@@ -39,7 +41,9 @@
             android:layout_below="@id/tv_product_name"
             android:layout_marginTop="5dp"
             android:text="price"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:fontFamily="@font/sora_light"
+            android:textColor="@color/black"/>
 
     </RelativeLayout>
 

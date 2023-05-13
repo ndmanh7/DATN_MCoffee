@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.mcoffee.R
+import com.example.mcoffee.data.model.user.UserRoles
 import com.example.mcoffee.data.remote.user.AuthRequestState
 import com.example.mcoffee.databinding.FragmentLoginBinding
 import com.example.mcoffee.safeNavigate
@@ -81,12 +82,21 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 userInformationViewModel.getUserInfo()
                 Toast.makeText(requireContext(),authRequestState.msg, Toast.LENGTH_SHORT).show()
                 userInformationViewModel.userInfo.observe(viewLifecycleOwner) {
-                    if (it.isAdmin) {
-                        LoginConfig.loginState(requireContext(), "logged_in_as_admin")
-                        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToAdminActivity())
-                    } else {
-                        LoginConfig.loginState(requireContext(), "logged_in_as_user")
-                        findNavController().safeNavigate(LoginFragmentDirections.actionLoginFragmentToMainActivity())
+                    when(it.role) {
+                        UserRoles.ADMIN -> {
+                            LoginConfig.loginState(requireContext(), "logged_in_as_admin")
+                            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToAdminActivity())
+                        }
+
+                        UserRoles.CUSTOMER -> {
+                            LoginConfig.loginState(requireContext(), "logged_in_as_user")
+                            findNavController().safeNavigate(LoginFragmentDirections.actionLoginFragmentToMainActivity())
+                        }
+
+                        UserRoles.EMPLOYEE -> {
+                            LoginConfig.loginState(requireContext(), "logged_in_as_employee")
+                            findNavController().safeNavigate(LoginFragmentDirections.actionLoginFragmentToEmployeeActivity())
+                        }
                     }
                 }
                 viewModel.clearLoginState()

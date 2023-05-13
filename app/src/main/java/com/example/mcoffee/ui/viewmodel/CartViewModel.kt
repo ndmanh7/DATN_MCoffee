@@ -8,9 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.mcoffee.data.model.Order
 import com.example.mcoffee.data.model.Product
 import com.example.mcoffee.data.model.Record
+import com.example.mcoffee.data.remote.FireBaseState
 import com.example.mcoffee.domain.repo.CartRepository
 import com.example.mcoffee.domain.repo.OrderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,6 +26,9 @@ class CartViewModel @Inject constructor(
     private val _recordList = MutableLiveData<ArrayList<Record>>()
     val recordList: LiveData<ArrayList<Record>> get() = _recordList
 
+    private val _removeState = MutableLiveData<FireBaseState<String>>()
+    val removeState: LiveData<FireBaseState<String>> get() = _removeState
+
     fun getProductsInCart() {
         viewModelScope.launch {
             cartRepository.getProductsInCart().collect {
@@ -32,27 +37,11 @@ class CartViewModel @Inject constructor(
         }
     }
 
-//     fun order(position: Int) {
-//        viewModelScope.launch {
-//            for (index in _productList.value?.indices!!) {
-//                Log.d("manh", "order at line 37: $position")
-//                if (position == index) {
-//                    val order = Order()
-//                    order.apply {
-//                        _productList.value!![index].also {
-//                            productName = it.productName
-//                            orderDate = ""
-//                            orderAmount = 0
-//                            price = it.price
-//                            totalPrice = it.price
-//                        }
-//                    }
-//                    orderRepository.addOrder(order)
-//                    cartRepository.removeFromCart(productList.value!![index])
-//                }
-//            }
-//        }
-//    }
+    fun removeFromCart(recordList: List<Record>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _removeState.postValue(cartRepository.removeFromCart(recordList))
+        }
+    }
 
     fun order() {
         var order = Order(

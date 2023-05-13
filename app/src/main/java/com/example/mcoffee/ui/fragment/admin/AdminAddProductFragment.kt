@@ -46,6 +46,7 @@ class AdminAddProductFragment :
             adminHomeViewModel.addProductState.collect { isSuccess ->
                 if (isSuccess) {
                     Toast.makeText(requireContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
                 } else {
                     Toast.makeText(requireContext(), "Có lỗi xảy ra", Toast.LENGTH_SHORT).show()
                 }
@@ -62,6 +63,27 @@ class AdminAddProductFragment :
 
             //add product
             btnAddProduct.setOnClickListener {
+                validateInputField()
+
+            }
+
+            imgProductImage.setOnClickListener {
+                imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            }
+        }
+    }
+
+    private fun validateInputField() {
+        binding.apply {
+            if (edtProductName.text.toString().isEmpty()) {
+                Toast.makeText(requireContext(), "Tên sản phẩm không được để trống", Toast.LENGTH_SHORT).show()
+            } else if (edtProductDescription.text.toString().isEmpty()) {
+                Toast.makeText(requireContext(), "Mô tả sản phẩm không được để trống", Toast.LENGTH_SHORT).show()
+            } else if (edtProductPrice.text.toString().isEmpty()) {
+                Toast.makeText(requireContext(), "Giá sản phẩm không được để trống", Toast.LENGTH_SHORT).show()
+            } else if (adminHomeViewModel.productImageUri.value?.toString() == null) {
+                Toast.makeText(requireContext(), "Chưa có ảnh sản phẩm", Toast.LENGTH_SHORT).show()
+            } else {
                 var categoryId = ""
                 for (category in homeViewModel.categoryList.value!!) {
                     if (tvCategory.text.toString() == category.categoryName) {
@@ -73,14 +95,11 @@ class AdminAddProductFragment :
                     description = edtProductDescription.text.toString(),
                     price = edtProductPrice.text.toString().toInt(),
                     categoryUid = categoryId,
-                    image = adminHomeViewModel.productImageUri.value!!.toString()
+                    image = adminHomeViewModel.productImageUri.value.toString()
                 )
                 adminHomeViewModel.addProductByAdmin(product)
             }
 
-            imgProductImage.setOnClickListener {
-                imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-            }
         }
     }
 

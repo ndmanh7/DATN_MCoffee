@@ -10,5 +10,6 @@ data class Users(
     var phoneNumber: String = "",
     var firstName: String = "",
     var lastName: String = "",
-    var isAdmin: Boolean = false
+    var role: String = "",
+    var image: String = ""
 )

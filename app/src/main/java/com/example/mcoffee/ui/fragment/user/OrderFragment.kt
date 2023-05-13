@@ -2,6 +2,7 @@ package com.example.mcoffee.ui.fragment.user
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,18 +27,13 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(FragmentOrderBinding::i
     @SuppressLint("SetTextI18n")
     override fun observeViewModel() {
         super.observeViewModel()
-        viewModel.amount.observe(viewLifecycleOwner) { amount ->
-            binding.apply {
-
-            }
-        }
-
         viewModel.address.observe(viewLifecycleOwner) {
             binding.apply {
                 tvReceiverInfo.text = "${it["name"]} | ${it["phoneNumber"]}"
                 tvReceiverAddress.text = it["address"]
             }
         }
+
     }
 
     override fun bindView() {
@@ -48,7 +44,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(FragmentOrderBinding::i
 
         binding.btnOrder.setOnClickListener {
             addOrder()
-            findNavController().popBackStack()
+
         }
 
         binding.btnEditAddress.setOnClickListener {
@@ -56,9 +52,11 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(FragmentOrderBinding::i
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun fetchProductInfo() {
         //get record info from detail screen
-        val recordFromDetailFragment = requireArguments().getSerializable("record_from_detail_screen") as Record?
+        val recordFromDetailFragment =
+            requireArguments().getSerializable("record_from_detail_screen") as Record?
 
         //submit adapter list base on arguments
         mAdapter = ProductListInOrderAdapter()
@@ -85,7 +83,8 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(FragmentOrderBinding::i
         }
 
         binding.apply {
-            tvTotalPayment.text = totalPrice.toString()
+            tvTotalPayment.text = "Tổng tiền: $totalPrice đ"
+            tvTotalPrice.text = "$totalPrice đ"
         }
     }
 
@@ -94,7 +93,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(FragmentOrderBinding::i
     private fun addOrder() {
         val recordsFromCartFragment = requireArguments().get("records") as List<*>?
         val recordsFromDetailScreen = requireArguments().get("record_from_detail_screen") as Record?
-        var records : MutableList<Record>? = mutableListOf()
+        var records: MutableList<Record>? = mutableListOf()
         var totalPrice = 0
 
         if (recordsFromCartFragment != null) {
@@ -109,22 +108,30 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(FragmentOrderBinding::i
             totalPrice += item.totalPrice
         }
 
-        binding.apply {
-            val order = Order()
-            val date = Calendar.getInstance().time
-            val formatted = SimpleDateFormat("dd-MM-yyyy HH:mm").format(date)
-            Log.d("manh", "addOrder at line 115: $formatted")
-            order.apply {
-                receiverName = viewModel.address.value?.get("name") ?: ""
-                receiverPhone = viewModel.address.value?.get("phoneNumber") ?: ""
-                receiverAddress = viewModel.address.value?.get("address") ?: ""
-                orderDate = ""
-                this.records = records
-                this.totalPrice = totalPrice
-                this.orderDate = formatted
+        if (viewModel.address.value?.get("name").isNullOrEmpty() ||
+            viewModel.address.value?.get("phoneNumber").isNullOrEmpty() ||
+            viewModel.address.value?.get("address").isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "Chưa có địa chỉ người nhận", Toast.LENGTH_SHORT).show()
+        } else {
+            binding.apply {
+                val order = Order()
+                val date = Calendar.getInstance().time
+                val formatted = SimpleDateFormat("dd-MM-yyyy HH:mm").format(date)
+                order.apply {
+                    receiverName = viewModel.address.value?.get("name").toString()
+                    receiverPhone = viewModel.address.value?.get("phoneNumber").toString()
+                    receiverAddress = viewModel.address.value?.get("address").toString()
+                    this.records = records
+                    this.totalPrice = totalPrice
+                    this.orderDate = formatted
+                }
+                viewModel.addToOrder(order)
+                Toast.makeText(requireContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
             }
-            viewModel.addToOrder(order)
         }
+
+
     }
 
 }

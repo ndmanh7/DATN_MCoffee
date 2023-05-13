@@ -11,5 +11,5 @@ interface CartFirebaseDataSource {
 
     suspend fun getProductsInCart(): Flow<ArrayList<Record>>
 
-    fun removeFromCart(record: Record)
+    fun removeFromCart(recordList: List<Record>): FireBaseState<String>
 }

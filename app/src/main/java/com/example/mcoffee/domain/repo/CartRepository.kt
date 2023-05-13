@@ -9,6 +9,5 @@ import kotlinx.coroutines.flow.Flow
 interface CartRepository {
     suspend fun addToCart(record: Record): FireBaseState<String>
     suspend fun getProductsInCart(): Flow<ArrayList<Record>>
-
-    fun removeFromCart(record: Record)
+    fun removeFromCart(recordList: List<Record>): FireBaseState<String>
 }

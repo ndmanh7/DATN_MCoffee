@@ -1,5 +1,6 @@
 package com.example.mcoffee.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,10 +34,11 @@ class ProductListAdapter(
 
     override fun getItemCount(): Int = productList.size
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ProductListHolder, position: Int) {
         with(holder.binding) {
             tvProductName.text = productList[position].productName
-            tvProductPrice.text = productList[position].price.toString()
+            tvProductPrice.text = productList[position].price.toString() + " đ"
 
             Glide.with(this.root)
                 .load(productList[position].image)

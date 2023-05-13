@@ -44,6 +44,10 @@ class AdminHomeFragment : BaseFragment<FragmentHomeAdminBinding>(FragmentHomeAdm
         binding.btnAddProduct.setOnClickListener {
             findNavController().navigate(AdminHomeFragmentDirections.actionAdminHomeFragmentToAdminAddProductFragment())
         }
+
+        binding.imgSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_adminHomeFragment_to_adminSearchFragment)
+        }
     }
 
     private fun showCategoryList() {
@@ -64,7 +68,6 @@ class AdminHomeFragment : BaseFragment<FragmentHomeAdminBinding>(FragmentHomeAdm
             binding.recyclerViewProduct.apply {
                 adapter = mProductAdapter
                 layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
-
                 mProductAdapter.setClickListener(this@AdminHomeFragment)
             }
         }

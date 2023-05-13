@@ -10,7 +10,9 @@ import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mcoffee.R
 import com.example.mcoffee.data.model.Order
 import com.example.mcoffee.databinding.FragmentOrderManageAdminBinding
 import com.example.mcoffee.ui.adapter.admin.AdminOrderAdapter
@@ -46,6 +48,10 @@ class AdminOrderManageFragment :
         binding.recyclerViewOrderByDate.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            mAdapter.setOnItemClickListener {
+                val action = AdminOrderManageFragmentDirections.actionAdminOrderManageFragmentToAdminOrderDetailFragment(it)
+                findNavController().navigate(action)
+            }
         }
     }
 

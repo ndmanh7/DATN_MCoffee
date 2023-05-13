@@ -3,6 +3,7 @@ package com.example.mcoffee.ui.fragment.user
 import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.mcoffee.R
 import com.example.mcoffee.data.model.user.Users
 import com.example.mcoffee.databinding.FragmentProfileBinding
@@ -23,12 +24,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         userInformationViewModel.userInfo.observe(viewLifecycleOwner) {
             Log.d("manh", "observeViewModel at line 21: $it")
             updateUI(it)
+            Glide.with(requireContext())
+                .load(it.image)
+                .into(binding.imgUserImage)
         }
     }
 
     private fun updateUI(user: Users) {
         binding.apply {
-            tvUsername.text = user.email
+            tvUsername.text = user.firstName
             tvEmail.text = user.email
         }
     }
@@ -43,10 +47,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             findNavController().navigate(R.id.action_profileFragment_to_orderHistoryFragment)
         }
 
+        binding.view.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
+        }
+
         binding.viewLogOut.setOnClickListener {
             LoginConfig.loginState(requireContext(), "logged_out")
             loginViewModel.logout()
             requireActivity().finish()
+        }
+
+        binding.imgBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

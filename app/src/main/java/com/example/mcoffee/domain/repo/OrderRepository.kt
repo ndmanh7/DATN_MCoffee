@@ -8,4 +8,7 @@ interface OrderRepository {
     suspend fun addOrder(order: Order): FireBaseState<String>
     fun getAllOrders(): Flow<List<Order>>
     fun getAllOrdersByAdmin(): Flow<List<Order>>
+    suspend fun confirmOrderByAdmin(order: Order): FireBaseState<String>
+    suspend fun abortOrderByAdmin(order: Order): FireBaseState<String>
+    suspend fun abortOrderByUser(order: Order): FireBaseState<String>
 }

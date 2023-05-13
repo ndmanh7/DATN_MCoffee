@@ -12,6 +12,5 @@ data class Order(
     var records: List<Record> = emptyList(),
     var orderDate: String = "",
     var totalPrice: Int = 0,
-    var isConfirmed: Boolean = false
-) {
-}
+    var isConfirmed: String = "processing"
+) : java.io.Serializable

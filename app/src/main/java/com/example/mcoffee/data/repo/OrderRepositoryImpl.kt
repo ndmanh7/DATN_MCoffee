@@ -20,4 +20,16 @@ class OrderRepositoryImpl(
     override fun getAllOrdersByAdmin(): Flow<List<Order>> {
         return orderFirebaseDataSource.getAllOrdersByAdmin()
     }
+
+    override suspend fun confirmOrderByAdmin(order: Order): FireBaseState<String> {
+        return orderFirebaseDataSource.confirmOrdersByAdmin(order)
+    }
+
+    override suspend fun abortOrderByAdmin(order: Order): FireBaseState<String> {
+        return orderFirebaseDataSource.abortOrdersByAdmin(order)
+    }
+
+    override suspend fun abortOrderByUser(order: Order): FireBaseState<String> {
+        return orderFirebaseDataSource.abortOrdersByUser(order)
+    }
 }

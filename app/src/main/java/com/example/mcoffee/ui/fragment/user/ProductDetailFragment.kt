@@ -42,19 +42,21 @@ class ProductDetailFragment: BaseFragment<FragmentProductDetailBinding>(Fragment
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun bindView() {
         super.bindView()
         showProductInfoFromHomeFragment()
+        val productInfo = args.productDetail
+        var amountOrder = 1
 
         binding.apply {
+            btnOrder.text = productInfo.price.toString() +" đ"
             btnOrder.setOnClickListener {
-                val productInfo = args.productDetail
                 val record = Record(
                     product = productInfo,
-                    amount = 1,
-                    totalPrice = productInfo.price
+                    amount = amountOrder,
+                    totalPrice = productInfo.price * amountOrder
                 )
                 findNavController().navigate(R.id.action_productDetailFragment_to_orderFragment, bundleOf("record_from_detail_screen" to record))
             }
@@ -63,8 +65,24 @@ class ProductDetailFragment: BaseFragment<FragmentProductDetailBinding>(Fragment
                 addToCart()
             }
 
+            //change product amount
+
             btnBack.setOnClickListener {
                 findNavController().popBackStack()
+            }
+
+            btnAdd.setOnClickListener {
+                ++amountOrder
+                tvAmount.text = "$amountOrder"
+                btnOrder.text = "${amountOrder * productInfo.price} đ"
+            }
+
+            btnMinus.setOnClickListener {
+                if (amountOrder > 1) {
+                    --amountOrder
+                    tvAmount.text = "$amountOrder"
+                    btnOrder.text = "${amountOrder * productInfo.price} đ"
+                }
             }
         }
     }
@@ -85,7 +103,6 @@ class ProductDetailFragment: BaseFragment<FragmentProductDetailBinding>(Fragment
             productInfo.apply {
                 tvDetailProductName.text = productName
                 tvDetailProductDescription.text = description
-                tvProductPrice.text = price.toString()
 
                 Glide.with(root)
                     .load(image)

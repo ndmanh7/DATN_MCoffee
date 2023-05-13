@@ -87,6 +87,7 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:imeOptions="actionSend|flagNoEnterAction"
+                    android:password="true"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>

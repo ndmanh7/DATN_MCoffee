@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_adminHomeFragment_to_adminEditProductFragment"
             app:destination="@id/adminEditProductFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminSearchFragment"
+            app:destination="@id/adminSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminCategoryManageFragment"
@@ -30,7 +33,11 @@
     <fragment
         android:id="@+id/adminOrderManageFragment"
         android:name="com.example.mcoffee.ui.fragment.admin.AdminOrderManageFragment"
-        android:label="AdminOrderManageFragment" />
+        android:label="AdminOrderManageFragment" >
+        <action
+            android:id="@+id/action_adminOrderManageFragment_to_adminOrderDetailFragment"
+            app:destination="@id/adminOrderDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/adminAddProductFragment"
         android:name="com.example.mcoffee.ui.fragment.admin.AdminAddProductFragment"
@@ -55,6 +62,28 @@
         android:label="AdminEditCategoryFragment">
         <argument android:name="category"
             app:argType="com.example.mcoffee.data.model.category.Category"/>
+    </fragment>
+    <fragment
+        android:id="@+id/adminOrderDetailFragment"
+        android:name="com.example.mcoffee.ui.fragment.admin.AdminOrderDetailFragment"
+        android:label="AdminOrderDetailFragment" >
+
+        <argument
+            android:name="order"
+            app:argType="com.example.mcoffee.data.model.Order"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/adminStatisticsFragment"
+        android:name="com.example.mcoffee.ui.fragment.admin.AdminStatisticsFragment"
+        android:label="AdminStatisticsFragment" />
+    <fragment
+        android:id="@+id/adminSearchFragment"
+        android:name="com.example.mcoffee.ui.fragment.admin.AdminSearchFragment"
+        android:label="AdminSearchFragment" >
+        <action
+            android:id="@+id/action_adminSearchFragment_to_adminEditProductFragment"
+            app:destination="@id/adminEditProductFragment" />
     </fragment>
 
 

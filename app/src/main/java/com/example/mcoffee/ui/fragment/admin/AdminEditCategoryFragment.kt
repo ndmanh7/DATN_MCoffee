@@ -1,9 +1,13 @@
 package com.example.mcoffee.ui.fragment.admin
 
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.mcoffee.data.model.Product
+import com.example.mcoffee.data.model.category.Category
 import com.example.mcoffee.databinding.FragmentEditCategoryAdminBinding
 import com.example.mcoffee.ui.base.BaseFragment
 import com.example.mcoffee.ui.viewmodel.admin.AdminCategoryManageViewModel
@@ -23,6 +27,7 @@ class AdminEditCategoryFragment : BaseFragment<FragmentEditCategoryAdminBinding>
             adminCategoryManageViewModel.editCategoryState.collect { isSuccess ->
                 if (isSuccess) {
                     Toast.makeText(requireContext(), "Cập nhật danh mục thành công", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
                 } else {
                     Toast.makeText(requireContext(), "Có lỗi xảy ra", Toast.LENGTH_SHORT).show()
                 }
@@ -33,6 +38,7 @@ class AdminEditCategoryFragment : BaseFragment<FragmentEditCategoryAdminBinding>
             adminCategoryManageViewModel.deleteCategoryState.collect { isSuccess ->
                 if (isSuccess) {
                     Toast.makeText(requireContext(), "Xóa danh mục thành công", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
                 } else {
                     Toast.makeText(requireContext(), "Có lỗi xảy ra", Toast.LENGTH_SHORT).show()
                 }
@@ -55,8 +61,21 @@ class AdminEditCategoryFragment : BaseFragment<FragmentEditCategoryAdminBinding>
 
         //delete button
         binding.btnRemoveProduct.setOnClickListener {
-            adminCategoryManageViewModel.deleteCategory(category)
+            showDialog(category)
         }
+    }
+
+    private fun showDialog(category: Category) {
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle("Xóa danh mục")
+            .setMessage("Xác nhận xóa danh mục này?")
+            .setPositiveButton("Xác nhận") { _, _ ->
+                adminCategoryManageViewModel.deleteCategory(category)
+            }
+            .setNegativeButton("Hủy bỏ") { _, _ -> }
+            .create()
+
+        alertDialog.show()
     }
 
 }

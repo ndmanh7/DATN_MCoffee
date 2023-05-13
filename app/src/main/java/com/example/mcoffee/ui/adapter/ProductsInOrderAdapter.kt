@@ -30,7 +30,7 @@ class ProductsInOrderAdapter : RecyclerView.Adapter<ProductsInOrderAdapter.Produ
         holder.binding.apply {
             recordList[position].also {
                 tvProductInfo.text = "${it.product?.productName} (${it.product?.price}) x ${it.amount}"
-                tvTotalPrice.text = it.totalPrice.toString()
+                tvTotalPrice.text = it.totalPrice.toString() + " đ"
             }
         }
     }
